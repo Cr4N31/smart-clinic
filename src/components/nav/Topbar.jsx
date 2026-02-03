@@ -1,8 +1,9 @@
 import { FiMenu, FiBell, FiUser } from "react-icons/fi";
+import logo from "../../assets/smartclinic.png";
 
-function Topbar({ logo, currentPage, user, toggleSidebar }) {
+function Topbar({ currentPage, user, toggleSidebar }) {
   return (
-    <div className="bg-indigo-600 border-b-2 border-purple-300 text-white">
+    <div className="bg-white border-b-2 border-purple-100 text-purple-500">
       <div className="flex items-center justify-between px-4 py-3 md:px-6">
         {/* Left: Hamburger + Logo + Page Name */}
         <div className="flex items-center gap-3">
@@ -12,8 +13,8 @@ function Topbar({ logo, currentPage, user, toggleSidebar }) {
           >
             <FiMenu className="w-6 h-6" />
           </button>
-          <img src={logo} alt="Logo" className="w-10 h-10 rounded" />
-          <h2 className="text-lg font-semibold mr-2">
+          <img src={logo} alt="Logo" className="w-16 h-16 rounded" />
+          <h2 className="text-lg font-semibold mr-4">
             {currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}
           </h2>
         </div>
