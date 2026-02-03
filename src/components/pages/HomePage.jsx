@@ -5,51 +5,64 @@ import Sidebar from "../nav/Sidebar";
 import Topbar from "../nav/Topbar";
 
 function HomePage({ user, setUser }) {
-  // Shared state for all residents
   const [residents, setResidents] = useState(() => {
     const saved = localStorage.getItem("view");
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Persist currentPage across refresh
   const [currentPage, setCurrentPage] = useState(() => {
     const saved = localStorage.getItem("currentPage");
-    return saved || "register"; // default to 'register'
+    return saved || "register";
   });
 
-  // Update localStorage whenever currentPage changes
+  // NEW: Sidebar open state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("currentPage", currentPage);
   }, [currentPage]);
 
-  // Function to add a new resident
   function addResident(newResident) {
     setResidents(prev => {
       const updated = [...prev, newResident];
-      localStorage.setItem("view", JSON.stringify(updated)); // persist residents
+      localStorage.setItem("view", JSON.stringify(updated));
       return updated;
     });
   }
 
+  // Toggle function for hamburger
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
   return (
-    <div style={{ padding: "2rem" }}>
-      <Topbar user={user} currentPage={currentPage} />
-      <Sidebar
+    <div className="flex flex-col h-screen">
+      {/* Topbar */}
+      <Topbar
+        user={user}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        setUser={setUser}
+        toggleSidebar={toggleSidebar}
+        logo="/logo.png" // your logo path here
       />
 
-      <h1>Resident Management</h1>
-
-      {/* Render Register or View based on currentPage */}
-      {currentPage === "register" && <RegisterResidents addResident={addResident} />}
-      {currentPage === "view" && (
-        <ViewResidents
-          residents={residents}
-          setResidents={setResidents}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <Sidebar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          setUser={setUser}
+          isOpen={sidebarOpen}
+          toggleSidebar={toggleSidebar}
         />
-      )}
+
+        {/* Main content */}
+        <main className="flex-1 p-6 overflow-auto bg-gray-50">
+          <h1 className="text-3xl font-bold text-purple-700 mb-6 text-center">
+            Resident Management
+          </h1>
+
+          {currentPage === "register" && <RegisterResidents addResident={addResident} />}
+          {currentPage === "view" && <ViewResidents residents={residents} setResidents={setResidents} />}
+        </main>
+      </div>
     </div>
   );
 }

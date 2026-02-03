@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react"
+import AOS from "aos";
+import "aos/dist/aos.css";
 import LoginForm from "./components/auth/LoginForm"
 import HomePage from "./components/pages/HomePage"
 function App() {
@@ -9,6 +11,11 @@ function App() {
     setUser(data);
     localStorage.setItem("user", JSON.stringify(data));
   }
+
+  useEffect(() => {
+    AOS.init({ duration: 800, once: false }); // duration in ms, once=true means animate only once
+  }, []);
+
 
   useEffect (() => {
     const savedUser = localStorage.getItem("user")

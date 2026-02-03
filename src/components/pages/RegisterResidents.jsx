@@ -66,7 +66,7 @@ function RegisterResidents({ addResident }) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up">
       <h1 className="text-2xl font-bold text-blue-700 mb-6 text-center">Register Resident</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -234,7 +234,7 @@ function RegisterResidents({ addResident }) {
       </form>
 
       {successData && (
-        <div className="mt-6 p-4 rounded-md bg-purple-100 border-l-4 border-purple-600 text-purple-800">
+        <div className="fixed top-5 right-5 z-50 w-80 p-4 bg-purple-100 border-l-4 border-purple-600 text-purple-800 rounded shadow-lg">
           <h3 className="font-semibold">Resident Registered Successfully</h3>
           <p><strong>Resident Number:</strong> {successData.residentNumber}</p>
           <p>{successData.resident.firstName} {successData.resident.lastName}</p>
