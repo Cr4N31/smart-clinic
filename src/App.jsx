@@ -3,31 +3,42 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import LoginForm from "./components/auth/LoginForm"
 import HomePage from "./components/pages/HomePage"
+import LoadingScreen from "./components/nav/LoadingScreen";
+
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   function handleLogin(data){
-    console.log("Login data submitted:", data)
-    setUser(data);
-    localStorage.setItem("user", JSON.stringify(data));
+     setLoading(true); // Show loading screen
+     setTimeout(() => {
+      setUser(data); // Fake API delay
+      setLoading(false);
+      localStorage.setItem("user", JSON.stringify(data));
+    }, 1500); // 1.5s delay for demo
   }
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: false }); // duration in ms, once=true means animate only once
+    AOS.init({ duration: 800, once: false });
   }, []);
 
-
-  useEffect (() => {
+  // Check if user is already logged in
+  useEffect(() => {
     const savedUser = localStorage.getItem("user")
     if (savedUser) {
       setUser(JSON.parse(savedUser))
     }
+        // Keep loading for at least 500ms so the user sees the screen
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
   }, [])
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <>
-    {!user && <LoginForm setUser={setUser} onSubmit={handleLogin}/>}
-    {user && <HomePage user={user} setUser={setUser} />}
+      {!user && <LoginForm setUser={setUser} onSubmit={handleLogin}/>}
+      {user && <HomePage user={user} setUser={setUser} />}
     </>
   )
 }
