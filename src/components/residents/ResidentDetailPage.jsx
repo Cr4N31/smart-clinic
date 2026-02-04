@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNotifications } from "../ui/NotificationContext.jsx";
 
 function ResidentDetailPage({ resident, residents, updateResident, goBack, residentCSV }) {
+  const { addNotification } = useNotifications();
   const [formData, setFormData] = useState({ ...resident });
   const [history, setHistory] = useState(resident.history || []);
 
@@ -26,7 +28,7 @@ function ResidentDetailPage({ resident, residents, updateResident, goBack, resid
 
     updateResident(updatedResident);
     setHistory(updatedHistory);
-    alert("Resident updated successfully!");
+    addNotification("Residents CSV exported");
   }
 
   return (

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { mockRegisterResident } from "../../services/residentService";
+import { useNotifications } from "../ui/NotificationContext.jsx";
 import Toast from "../ui/Toast";
 
-function RegisterResidents({ addResident, user }) {
+function RegisterResidents({ addResident }) {
+  const { addNotification } = useNotifications();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -46,12 +48,13 @@ function RegisterResidents({ addResident, user }) {
 
     try {
       const response = await mockRegisterResident(formData);
-      addResident(response.resident);
+      const residentAdded = response.resident || response;
+      addResident(residentAdded);
       setSuccessData({
         title: "Resident Registered Successfully",
-        residentNumber: response.residentNumber,
-        firstName: response.resident.firstName,
-        lastName: response.resident.lastName
+        residentNumber: residentAdded.residentNumber || response.residentNumber,
+        firstName: residentAdded.firstName,
+        lastName: residentAdded.lastName
       });
       setFormData({
         firstName: "",
@@ -68,11 +71,15 @@ function RegisterResidents({ addResident, user }) {
         bloodGroup: "",
         sex: ""
       });
+
+      // Notify after successful registration
+      addNotification(`Resident ${residentAdded.firstName} ${residentAdded.lastName} registered`);
     } catch (err) {
       console.error("Error registering resident:", err);
     } finally {
       setIsSubmitting(false);
     }
+
   }
 
   return (
