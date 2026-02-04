@@ -207,21 +207,21 @@ function ResidentDetailPage({ resident, updateResident, goBack }) {
       <div className="flex gap-3 mb-6">
         <button
           onClick={handleSave}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="md:px-4 md:py-2 px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Save Changes
         </button>
         <button
           onClick={exportSelectedToCSV}
           disabled={selectedIndices.size === 0}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+          className="md:px-4 md:py-2 px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
         >
           Export Selected to CSV ({selectedIndices.size})
         </button>
         <button
           onClick={emailSelectedRecords}
           disabled={selectedIndices.size === 0}
-          className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400"
+          className="md:px-4 md:py-2 px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:bg-gray-400"
         >
           Email Selected ({selectedIndices.size})
         </button>
