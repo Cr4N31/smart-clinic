@@ -2,11 +2,13 @@ import { useState } from "react";
 import { mockRegisterResident } from "../../services/residentService";
 import Toast from "../ui/Toast";
 
-function RegisterResidents({ addResident }) {
+function RegisterResidents({ addResident, user }) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     otherName: "",
+    phoneNumber: "",
+    emailAddress: "",
     maritalStatus: "",
     branch: "",
     dob: "",
@@ -55,6 +57,8 @@ function RegisterResidents({ addResident }) {
         firstName: "",
         lastName: "",
         otherName: "",
+        phoneNumber: "",
+        emailAddress: "",
         maritalStatus: "",
         branch: "",
         dob: "",
@@ -112,6 +116,31 @@ function RegisterResidents({ addResident }) {
           </div>
         </div>
 
+        {/*Contact Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-purple-700 mb-1">Phone Number</label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              className="w-full border border-purple-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-purple-700 mb-1">Email Address</label>
+            <input
+              type="email"
+              name="emailAddress"
+              value={formData.emailAddress}
+              onChange={handleChange}
+              className="w-full border border-purple-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        </div>
+
         {/* Selects */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
@@ -138,9 +167,9 @@ function RegisterResidents({ addResident }) {
               className="w-full border border-purple-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select branch</option>
-              <option value="hq">Headquarters</option>
-              <option value="north">North Branch</option>
-              <option value="south">South Branch</option>
+              <option value="hq">Paradise Estate</option>
+              <option value="north">Godab Estate</option>
+              <option value="south">Cosgrove Estate</option>
             </select>
           </div>
 

@@ -8,6 +8,7 @@ function ResidentActionModal({ isOpen, onClose, resident, updateResident }) {
       bloodPressure: "",
       heartRate: "",
       temperature: "",
+      price: "",
     }
   );
 
@@ -85,6 +86,20 @@ function ResidentActionModal({ isOpen, onClose, resident, updateResident }) {
               className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
             />
           </div>
+
+          {/* Price Form */}
+          <div className="space-y-3">
+            <div>
+                <label className="block text-sm font-semibold text-gray-700">Price paid</label>
+                <input
+                type="text"
+                name="price"
+                value={vitals.price}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                />
+            </div>
+          </div>
         </div>
 
         {/* History */}
@@ -98,7 +113,7 @@ function ResidentActionModal({ isOpen, onClose, resident, updateResident }) {
                 .map((h, i) => (
                   <li key={i} className="text-sm border-b border-gray-100 py-1">
                     <span className="font-medium">{new Date(h.updatedAt).toLocaleString()}:</span>{" "}
-                    BP: {h.bloodPressure || "-"}, HR: {h.heartRate || "-"}, Temp: {h.temperature || "-"}
+                    BP: {h.bloodPressure || "-"}, HR: {h.heartRate || "-"}, Temp: {h.temperature || "-"}, Price: {h.price || "-"}
                   </li>
                 ))}
             </ul>

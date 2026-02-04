@@ -1,6 +1,6 @@
 import ResidentActionButton from "./ResidentActionButton";
 
-function ResidentRow({ resident, index, onSelectResident }) {
+function ResidentRow({ resident, index, onSelectResident, user }) {
   return (
     <tr className={index % 2 === 0 ? "bg-white" : "bg-purple-50"}>
       <td className="px-4 py-2 border-b">{index + 1}</td>
@@ -11,8 +11,9 @@ function ResidentRow({ resident, index, onSelectResident }) {
       <td className="px-4 py-2 border-b">
         {resident.genotype} / {resident.bloodGroup || "-"}
       </td>
-      <td className="px-4 py-2 border-b">{resident.phone || "-"}</td>
-      <td className="px-4 py-2 border-b">{resident.registeredBy || "-"}</td>
+      <td className="px-4 py-2 border-b">{resident.phoneNumber || "-"}</td>
+      <td className="px-4 py-2 border-b">{resident.emailAddress || "-"}</td>
+      <td className="px-4 py-2 border-b">{user ? user.username : "-"}</td>
       <td className="px-4 py-2 border-b text-center">
       <ResidentActionButton resident={resident} onSelectResident={onSelectResident} />
 

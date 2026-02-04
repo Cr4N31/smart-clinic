@@ -8,11 +8,12 @@ const headers = [
   "Resident Number",
   "Genotype / Blood Group",
   "Phone Number",
+  "Email Address",
   "Registered By",
   "Action",
 ];
 
-function ResidentsTable({ residents, onSelectResident }) {
+function ResidentsTable({ residents, onSelectResident, user }) {
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
       <table className="min-w-full bg-white border border-gray-200">
@@ -34,6 +35,7 @@ function ResidentsTable({ residents, onSelectResident }) {
             <ResidentRow
               key={res.residentNumber}
               resident={res}
+              user={user}
               index={idx}
               onSelectResident={onSelectResident}
             />

@@ -59,8 +59,8 @@ function HomePage({ user, setUser }) {
             Resident Management
           </h1>
 
-          {currentPage === "register" && <RegisterResidents addResident={addResident} />}
-          {currentPage === "view" && <ViewResidents residents={residents} setResidents={setResidents} />}
+          {currentPage === "register" && <RegisterResidents user={user} addResident={addResident} />}
+          {currentPage === "view" && <ViewResidents user={user} residents={residents} setResidents={setResidents} />}
         </main>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ResidentDetailPage({ resident, updateResident, goBack }) {
+function ResidentDetailPage({ resident, residents, updateResident, goBack, residentCSV }) {
   const [formData, setFormData] = useState({ ...resident });
   const [history, setHistory] = useState(resident.history || []);
 
@@ -14,6 +14,7 @@ function ResidentDetailPage({ resident, updateResident, goBack }) {
       date: new Date().toLocaleString(),
       bloodPressure: formData.bloodPressure || "-",
       heartRate: formData.heartRate || "-",
+      price: formData.price || "-",
     };
 
     const updatedHistory = [snapshot, ...history];
@@ -63,14 +64,39 @@ function ResidentDetailPage({ resident, updateResident, goBack }) {
             placeholder="e.g., 72 bpm"
           />
         </div>
+
+         <div>
+          <label className="block font-semibold">Price Paid</label>
+          <input
+            name="price"
+            value={formData.price || ""}
+            onChange={handleChange}
+            className="w-full border rounded px-2 py-1"
+            placeholder="e.g. ₦5000"
+          />
+        </div>
       </div>
 
-      <button
-        onClick={handleSave}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Save Changes
-      </button>
+      {/* Buttons */}
+      <div className="flex gap-3 mb-6">
+        <button
+                onClick={handleSave}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+                Save Changes
+        </button>
+        <button
+            onClick={() => {
+                residentCSV(residents);
+                window.location.href =
+                `mailto:?subject=Residents Report&body=${history.map(h => `Date recorded: ${h.date}, Blood Pressure: ${h.bloodPressure}, Heart Rate: ${h.heartRate}, Price Paid: ${h.price}`).join('\n')}`;
+            }}
+            className="px-4 py-2 bg-blue-600 transition-all ease duration-250 hover:bg-blue-700 text-white rounded"
+            >
+            Send to Email
+        </button>
+
+      </div>
 
       {/* History Section */}
       <div className="mt-6">
@@ -84,6 +110,7 @@ function ResidentDetailPage({ resident, updateResident, goBack }) {
                 <th className="px-2 py-1 border-b">Date</th>
                 <th className="px-2 py-1 border-b">Blood Pressure</th>
                 <th className="px-2 py-1 border-b">Heart Rate</th>
+                <th className="px-2 py-1 border-b">Price Paid</th>
               </tr>
             </thead>
             <tbody>
@@ -92,6 +119,7 @@ function ResidentDetailPage({ resident, updateResident, goBack }) {
                   <td className="px-2 py-1 border-b">{h.date}</td>
                   <td className="px-2 py-1 border-b">{h.bloodPressure}</td>
                   <td className="px-2 py-1 border-b">{h.heartRate}</td>
+                  <td className="px-2 py-1 border-b">{h.price}</td>
                 </tr>
               ))}
             </tbody>
