@@ -89,7 +89,7 @@ function ResidentDetailPage({ resident, residents, updateResident, goBack, resid
             onClick={() => {
                 residentCSV(residents);
                 window.location.href =
-                `mailto:?subject=Residents Report&body=${history.map(h => `Date recorded: ${h.date}, Blood Pressure: ${h.bloodPressure}, Heart Rate: ${h.heartRate}, Price Paid: ${h.price}`).join('\n')}`;
+                `mailto:${resident.emailAddress}?subject=Residents Report&body=${history.map(h => `Date recorded: ${h.date}, Blood Pressure: ${h.bloodPressure}, Heart Rate: ${h.heartRate}, Price Paid: ${h.price}`).join('\n')}`;
             }}
             className="px-4 py-2 bg-blue-600 transition-all ease duration-250 hover:bg-blue-700 text-white rounded"
             >
