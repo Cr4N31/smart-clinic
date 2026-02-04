@@ -6,7 +6,10 @@ import HomePage from "./components/pages/HomePage"
 import LoadingScreen from "./components/nav/LoadingScreen";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem("user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   function handleLogin(data){
@@ -24,11 +27,7 @@ function App() {
 
   // Check if user is already logged in
   useEffect(() => {
-    const savedUser = localStorage.getItem("user")
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-    }
-        // Keep loading for at least 500ms so the user sees the screen
+    // Keep loading for at least 500ms so the user sees the screen
     const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, [])

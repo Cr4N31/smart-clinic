@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { mockRegisterResident } from "../../services/residentService";
+import Toast from "../ui/Toast";
 
 function RegisterResidents({ addResident }) {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ function RegisterResidents({ addResident }) {
   ];
   const genotypes = ["AA", "AS", "SS", "AC"];
   const bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
-  const religions = ["Christianity", "Islam", "Traditional", "Other"];
+  const religions = ["Christian", "Islam", "Traditional", "Other"];
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -44,7 +45,12 @@ function RegisterResidents({ addResident }) {
     try {
       const response = await mockRegisterResident(formData);
       addResident(response.resident);
-      setSuccessData(response);
+      setSuccessData({
+        title: "Resident Registered Successfully",
+        residentNumber: response.residentNumber,
+        firstName: response.resident.firstName,
+        lastName: response.resident.lastName
+      });
       setFormData({
         firstName: "",
         lastName: "",
@@ -233,13 +239,12 @@ function RegisterResidents({ addResident }) {
         </button>
       </form>
 
-      {successData && (
-        <div className="fixed top-5 right-5 z-50 w-80 p-4 bg-purple-100 border-l-4 border-purple-600 text-purple-800 rounded shadow-lg">
-          <h3 className="font-semibold">Resident Registered Successfully</h3>
-          <p><strong>Resident Number:</strong> {successData.residentNumber}</p>
-          <p>{successData.resident.firstName} {successData.resident.lastName}</p>
-        </div>
-      )}
+      <Toast
+        data={successData}
+        onClose={() => setSuccessData(null)}
+        duration={3000}
+      />
+
     </div>
   );
 }
